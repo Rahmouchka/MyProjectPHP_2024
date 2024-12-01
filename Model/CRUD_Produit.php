@@ -30,15 +30,14 @@ class CRUD_Produit
     }
     function add(Produit $produit)
     {
+        $lib = $produit->getLibelle();
+        $pu = $produit->getPrix();
+        $qte = $produit->getQte();
+        $desc = $produit->getDescription();
+        $img = $produit->getImage();
+        $promo = $produit->getPromo();
         $sql = "INSERT INTO produit
-        VALUES (" . $produit->getId() . "," .
-            $produit->getLibelle() . "," .
-            $produit->getPrix() . "," .
-            $produit->getQte() . "," .
-            $produit->getDescription() . "," .
-            $produit->getImage() . "," .
-            $produit->getPromo()
-            . ")";
+        VALUES (NULL,'$lib',$pu,$qte,'$desc','$img',$promo)";
         $res = $this->pdo->exec($sql);
         return $res;
     }

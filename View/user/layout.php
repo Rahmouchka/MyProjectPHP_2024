@@ -26,6 +26,9 @@
     <div class="container mt-3">
         <h1><?= $titre ?></h1>
         <?= $contenu ?>
+        <?php
+        include "footer.php";
+        ?>
     </div>
     <br>
 </body>

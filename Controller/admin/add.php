@@ -1,29 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <?php
-    require_once "../connexion.php";
-    $sql = "INSERT INTO  produit 
-    VALUES (NULL, 'cable vga',1, 200, 'Lorem ipsum 
-    dolor sit amet consectetur adipisicing elit. Architecto 
-    laboriosam cum possimus quod assumenda
-     nihil cupiditate error, repudiandae ipsum neque.',
-      'https://picsum.photos/images/200/200', 0)";
-    //envoie de la requete sql
-    //avant de fr l'envoie il faut créer $connexion=new Connexion
-    $connexion = new Connexion();
-    $pdo = $connexion->getConnexion();
-    //envoie de la requête sql
-    $res = $pdo->exec($sql);
-    echo var_dump($res);
-    ?>
-</body>
-
-</html>
+ <?php
+    require_once "../../Model/CRUD_Produit.php";
+    $crud = new CRUD_Produit();
+    //1ère requête: affichage d'un formulaire
+    include "../../View/admin/add.php";
+    //2ème requête: récupération des données
+    if (isset($_POST['ok'])) {
+        $lib = htmlspecialchars($_POST['lib']);
+        $pu = htmlspecialchars($_POST['pu']);
+        $qte = htmlspecialchars($_POST['qte']);
+        $desc = htmlspecialchars($_POST['desc']);
+        $img = htmlspecialchars($_POST['img']);
+        $promo = htmlspecialchars($_POST['promo']);
+        $Produit = new Produit(NULL, $lib, $pu, $qte, $desc, $img, $promo);
+        $res = $crud->add($Produit);
+        if ($res) {
+            header("Location: findAll.php");
+            exit;
+        }
+    }
